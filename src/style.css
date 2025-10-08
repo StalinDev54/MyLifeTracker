@@ -1,0 +1,56 @@
+/* 全局样式和字体设置 */
+@import url("mdui/mdui.css");
+
+/* 引入在线字体 */
+
+/* 引入本地可变字体 */
+@font-face {
+  font-family: "Wanted Sans Std Variable";
+  font-style: normal;
+  font-display: swap;
+  src: url("./assets/WantedSansStdVariable.woff2") format("woff2-variations");
+}
+
+/* 全局字体应用到根元素 */
+:root {
+  font-family: "Wanted Sans Std Variable", "Noto Sans SC", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 全局重置和基础样式 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(var(--mdui-color-surface));
+  font-family: inherit; /* 继承根元素的字体设置 */
+  color: rgb(var(--mdui-color-on-surface));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* 确保所有文本元素都继承全局字体 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+input,
+textarea,
+select,
+label {
+  font-family: inherit;
+}
