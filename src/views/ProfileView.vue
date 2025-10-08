@@ -538,7 +538,7 @@ import { useRouter } from 'vue-router';
 import WeatherRegionCard from '../components/ui/WeatherRegionCard.vue';
 import StatusDialog from '../components/dialogs/StatusDialog.vue';
 import AppStatusTooltip from '../components/dialogs/AppStatusTooltip.vue';
-import iOSPullToRefresh from '../components/utils/iOSPullToRefresh.vue';
+import iOSPullToRefresh from '../components/utils/IOSPullToRefresh.vue';
 import SocketStatusDisplay from '../components/features/SocketStatusDisplay.vue';
 import IOSStatusBarPlayer from '../components/features/DynamicIslandPlayer.vue';
 import PaymentQRCodeDialog from '../components/dialogs/PaymentQRCodeDialog.vue';
