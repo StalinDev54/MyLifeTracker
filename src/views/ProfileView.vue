@@ -80,6 +80,11 @@
                     <mdui-icon name="image" size="14" class="dropdown-icon"></mdui-icon>
                     <span class="dropdown-text">媒体</span>
                   </div>
+                  
+                  <div class="dropdown-item" @click="handleDropdownOption('博客')">
+                    <mdui-icon name="article" size="14" class="dropdown-icon"></mdui-icon>
+                    <span class="dropdown-text">博客</span>
+                  </div>
 
                 </div>
               </div>
@@ -921,11 +926,12 @@ const handleDropdownOption = (option) => {
   } else if (option === '投喂') {
     // 显示iOS风格收款码弹窗
     isPaymentDialogVisible.value = true;
+  } else if (option === '博客') {
+    // 跳转到博客网站
+    window.open('https://blog.jiclub.site', '_blank');
   }
-
   else if (option === '发消息') {
     window.open('https://chat.jiclub.site/', '_blank')
-
   }
 };
 

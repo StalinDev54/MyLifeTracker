@@ -8,10 +8,10 @@
 
       </div>
     </transition>
-    <div v-if="isPlaying" class="floating-play-indicator"></div>
+    <div v-if="isPlaying && isVisible" class="floating-play-indicator"></div>
     <!-- 一起听对话框 -->
     <ListenTogetherDialog :visible="isDialogVisible" :current-song="currentSong" :current-position="currentPosition"
-      :is-playing="isPlaying" @close="handleClose" @toggle-play="togglePlay" @exit="handleExitAndDispatch" 
+      :is-playing="isPlaying" @close="handleClose" @toggle-play="togglePlay" @exit="handleExitAndDispatch"
       @update:currentPosition="handleUpdateCurrentPosition" />
   </div>
 </template>
