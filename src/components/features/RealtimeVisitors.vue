@@ -93,7 +93,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { BAIDU_STAT_CONFIG } from '../../utils/baiduConfig.js'
-import iOSPullToRefresh from '../utils/iOSPullToRefresh.vue';
+import iOSPullToRefresh from '../utils/IOSPullToRefresh.vue';
 import StatisticsDetailDialog from '../dialogs/StatisticsDetailDialog.vue'
 // 状态管理
 const loading = ref(true)

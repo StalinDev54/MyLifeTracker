@@ -461,9 +461,11 @@ export default {
         // 处理进度条点击事件
         handleProgressClick(event) {
             console.log('🎵 进度条点击事件触发，当前播放状态:', this.isPlaying);
+            console.log('🎵 Socket播放状态:', this.currentSong.playing);
 
             // 只有当socket播放为暂停时，用户才可以自主拖动进度
-            if (this.isPlaying) {
+            // 注意：这里应该使用socket的播放状态，而不是本地播放状态
+            if (this.currentSong.playing) {
                 // 添加提示，告知用户只有在暂停时才能拖动进度条
                 console.log('🎵 播放进行中，无法手动拖动进度条');
                 // 可以考虑添加一个用户提示，比如Snackbar或Toast

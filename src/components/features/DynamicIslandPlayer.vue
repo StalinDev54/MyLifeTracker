@@ -687,12 +687,6 @@ export default {
 
     // 根据鼠标/触摸事件更新进度
     updateProgressFromEvent(e) {
-      // 只有当socket播放状态为暂停时才允许拖拽进度条
-      if (this.apiCurrentPlayingSong && this.apiCurrentPlayingSong.playing === true) {
-        console.log('🎵 Socket播放状态为播放中，无法拖拽进度条');
-        return;
-      }
-      
       if (!this.apiCurrentPlayingSong || !this.$refs.progressTrack) {
         return;
       }
@@ -715,12 +709,6 @@ export default {
 
     // 进度条拖拽结束后处理
     onProgressBarDragged() {
-      // 只有当socket播放状态为暂停时才处理拖拽结束事件
-      if (this.apiCurrentPlayingSong && this.apiCurrentPlayingSong.playing === true) {
-        console.log('🎵 Socket播放状态为播放中，无法拖拽进度条');
-        return;
-      }
-      
       if (!this.apiCurrentPlayingSong) {
         return;
       }
