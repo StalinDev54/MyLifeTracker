@@ -149,43 +149,13 @@ onMounted(() => {
 }
 
 .social-media-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    touch-action: none;
-    -webkit-overflow-scrolling: none;
     display: flex;
     flex-direction: column;
     background-color: white;
-    z-index: 10;
-}
-
-.social-media-container {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    overflow: hidden !important; // 禁止容器内滚动
-    touch-action: none !important; // 禁止触摸滚动
-    -webkit-overflow-scrolling: none !important; // 禁止iOS上的弹性滚动
-    display: flex !important;
-    flex-direction: column !important;
-    background-color: white !important;
-    z-index: 0 !important; // 修改z-index为0，确保不遮挡顶部导航栏
 
     // 固定在顶栏下方的内容区域
     .fixed-card-content {
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
         padding: 16px;
-        padding-top: 130px; // 增加与顶栏之间的间隙
-        box-sizing: border-box;
-        flex-shrink: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -216,15 +186,7 @@ onMounted(() => {
 
 /* 媒体标签区域样式 - 固定在AppBar下方 */
 .media-tabs {
-    position: fixed;
-    top: 5px; // 修改为56px，避开AppBar的高度
-    left: 0;
-    right: 0;
     background-color: white;
-    z-index: 90; // 低于AppBar的z-index
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 8px 16px;
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -289,7 +251,6 @@ onMounted(() => {
 
 .tab-content {
     width: 100%;
-    max-width: 600px;
 }
 
 /* 信息卡片容器样式 */

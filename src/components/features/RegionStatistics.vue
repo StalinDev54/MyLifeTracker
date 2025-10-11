@@ -1,7 +1,7 @@
 <template>
   <!-- 骨架屏 -->
   <div v-if="loading" class="region-stats-skeleton">
-    <div style="width: 300px; margin: 30px;" v-for="index in 5" :key="`skeleton-${index}`">
+    <div style="margin: 30px;" v-for="index in 5" :key="`skeleton-${index}`">
       <div style="display: flex; align-items: center">
         <s-skeleton style="width: 72px; height: 72px"></s-skeleton>
         <div style="flex-grow: 1; margin-left: 16px">
@@ -717,6 +717,7 @@ onBeforeUnmount(() => {
 .chart-container {
   height: 500px;
   position: relative;
+  overflow: hidden;
   width: 100%;
 }
 

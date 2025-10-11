@@ -313,19 +313,19 @@ const destroyListenTogetherInstance = () => {
   <s-appbar class="app-bar">
     <!-- 根据路由显示不同的左侧按钮 -->
 
-
-    <template v-if="route.path === '/realtime-visitors'">
+    <template v-if="['/realtime-visitors', '/social-media'].includes(route.path)">
       <s-icon-button @click="handleBack" slot="navigation">
         <s-icon name="arrow_back"></s-icon>
       </s-icon-button>
     </template>
-
 
     <template v-else>
       <s-icon-button slot="navigation">
         <s-icon name="menu"></s-icon>
 
       </s-icon-button>
+
+
       <div @click="openGithubPage" style="
     display: flex;        /* 启用 flex 布局 */
     flex-direction: column; /* 子元素纵向排列（垂直方向） */
@@ -338,10 +338,7 @@ const destroyListenTogetherInstance = () => {
     </template>
     <!--标题-->
     <div slot="headline">
-      <!-- 社交媒体页面显示固定标题 -->
-      <span v-if="route.path === '/social-media'">媒体</span>
-      <!-- 其他页面显示动态标题 -->
-      <span v-else>{{ currentTitle }}</span>
+      {{ currentTitle }}
     </div>
   </s-appbar>
 
