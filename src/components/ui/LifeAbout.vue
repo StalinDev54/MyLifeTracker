@@ -62,9 +62,11 @@
                 <!-- 优化后的骨架屏 -->
                 <div class="moments-article-card moments-rounded" v-for="i in 3" :key="i">
                     <div class="moments-user-info">
-                        <s-skeleton variant="circle" width="36px" height="36px" style="margin-right: 12px;"></s-skeleton>
+                        <s-skeleton variant="circle" width="36px" height="36px"
+                            style="margin-right: 12px;"></s-skeleton>
                         <div class="moments-user-details">
-                            <s-skeleton variant="text" width="80px" height="16px" style="margin-bottom: 4px;"></s-skeleton>
+                            <s-skeleton variant="text" width="80px" height="16px"
+                                style="margin-bottom: 4px;"></s-skeleton>
                             <s-skeleton variant="text" width="100px" height="12px"></s-skeleton>
                         </div>
                     </div>
@@ -347,6 +349,7 @@ onUnmounted(() => {
 /* 平台信息样式 */
 .moments-section {
     padding: 16px 0;
+    margin: 5px;
 }
 
 .moments-section-header {
@@ -922,117 +925,81 @@ onUnmounted(() => {
 }
 
 /* 微信朋友圈风格响应式设计 */
-@media (max-width: 768px) {
-    .moments-container {
-        padding: 0;
-        border-radius: 16px;
-    }
-
-    .moments-section {
-        padding: 12px;
-    }
-
-    .moments-platforms-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-
-    .moments-article-card {
-        padding: 14px;
-        width: 100%;
-        height: auto;
-        border-radius: 14px;
-    }
-
-    /* 响应式图片网格 - 默认布局 */
-    .moments-image-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-        gap: 6px;
-    }
-
-    /* 1张图片的响应式布局 */
-    .moments-article-images:has(.moments-image-container:nth-child(1):last-child) .moments-image-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .moments-article-images:has(.moments-image-container:nth-child(1):last-child) .moments-image-container {
-        aspect-ratio: 16/9;
-        max-height: 250px;
-    }
-
-    /* 2张图片的响应式布局 */
-    .moments-article-images:has(.moments-image-container:nth-child(2):last-child) .moments-image-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* 4张图片的响应式布局 */
-    .moments-article-images:has(.moments-image-container:nth-child(4):last-child) .moments-image-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .moments-music-card {
-        height: 88px;
-        border-radius: 14px;
-    }
-
-    .moments-music-content {
-        border-radius: 14px;
-        padding: 12px;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .moments-music-cover {
-        width: 56px;
-        height: 56px;
-        margin-right: 12px;
-        border-radius: 10px;
-    }
-
-    .moments-music-title {
-        font-size: 0.85rem;
-    }
-
-    .moments-music-singer {
-        font-size: 0.75rem;
-    }
-
-    .moments-play-icon {
-        font-size: 20px;
-        padding: 3px;
-    }
+.moments-container {
+    padding: 0;
+    border-radius: 16px;
 }
 
-/* 更小屏幕的适配 */
-@media (max-width: 360px) {
-    .moments-article-card {
-        border-radius: 12px;
-        padding: 12px;
-    }
+.moments-section {
+    margin: 5px;
+    padding: 12px;
+}
 
-    /* 更小屏幕的图片网格布局 */
-    .moments-image-grid {
-        grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-        gap: 4px;
-    }
+.moments-platforms-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
 
-    /* 1张图片的极小屏幕布局 */
-    .moments-article-images:has(.moments-image-container:nth-child(1):last-child) .moments-image-container {
-        max-height: 200px;
-    }
+.moments-article-card {
+    padding: 14px;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+}
 
-    .moments-music-card {
-        border-radius: 12px;
-        height: 80px;
-    }
+/* 响应式图片网格 - 默认布局 */
+.moments-image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 6px;
+}
 
-    .moments-music-content {
-        border-radius: 12px;
-        padding: 10px;
-    }
+/* 1张图片的响应式布局 */
+.moments-article-images:has(.moments-image-container:nth-child(1):last-child) .moments-image-grid {
+    grid-template-columns: 1fr;
+}
 
-    .moments-music-cover {
-        width: 50px;
-        height: 50px;
-        border-radius: 8px;
-    }
+.moments-article-images:has(.moments-image-container:nth-child(1):last-child) .moments-image-container {
+    aspect-ratio: 16/9;
+    max-height: 250px;
+}
+
+/* 2张图片的响应式布局 */
+.moments-article-images:has(.moments-image-container:nth-child(2):last-child) .moments-image-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 4张图片的响应式布局 */
+.moments-article-images:has(.moments-image-container:nth-child(4):last-child) .moments-image-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.moments-music-card {
+    height: 88px;
+    border-radius: 14px;
+}
+
+.moments-music-content {
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.moments-music-cover {
+    width: 56px;
+    height: 56px;
+    margin-right: 12px;
+    border-radius: 10px;
+}
+
+.moments-music-title {
+    font-size: 0.85rem;
+}
+
+.moments-music-singer {
+    font-size: 0.75rem;
+}
+
+.moments-play-icon {
+    font-size: 20px;
+    padding: 3px;
 }
 </style>
