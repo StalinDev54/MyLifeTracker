@@ -235,8 +235,6 @@ export function cacheLyrics(songId, lyricsData) {
     }
 
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-
-    localStorage.setItem(cacheKey, JSON.stringify(cacheData));
   } catch (error) {
     console.warn("缓存歌词失败:", error);
   }
@@ -255,15 +253,18 @@ export function getCachedLyrics(songId) {
   try {
     const cacheKey = `lyrics_cache_${songId}`;
     const cachedData = localStorage.getItem(cacheKey);
+    console.log(`🔍 检查缓存键: ${cacheKey}, 数据存在: ${!!cachedData}`);
 
     if (!cachedData) {
       return null;
     }
 
     const parsed = JSON.parse(cachedData);
+    console.log(`🔍 解析缓存数据:`, parsed);
 
     // 检查是否过期
     if (parsed.expires && Date.now() > parsed.expires) {
+      console.log(`⏰ 缓存过期: ${songId}`);
       localStorage.removeItem(cacheKey);
       return null;
     }
@@ -276,6 +277,11 @@ export function getCachedLyrics(songId) {
 }
 
 /**
+ * 正在进行的歌词请求映射，用于防止同时发起相同的请求
+ */
+const pendingRequests = new Map();
+
+/**
  * 获取歌词（带缓存功能）
  * @param {string|number} songId - 歌曲ID
  * @param {boolean} useCache - 是否使用缓存，默认true
@@ -286,23 +292,47 @@ export async function fetchLyricsWithCache(songId, useCache = true) {
     throw new Error("歌曲ID不能为空");
   }
 
+  // 生成请求键
+  const requestKey = `${songId}_${useCache}`;
+
+  // 检查是否有相同的请求正在进行中
+  if (pendingRequests.has(requestKey)) {
+    console.log(`⏳ 复用进行中的请求: ${songId}`);
+    return pendingRequests.get(requestKey);
+  }
+
   // 优先尝试从缓存获取
   if (useCache) {
+    console.log(`🔍 检查缓存: ${songId}`);
     const cachedLyrics = getCachedLyrics(songId);
     if (cachedLyrics) {
       console.log(`📝 从缓存获取歌词: ${songId}`);
       return cachedLyrics;
+    } else {
+      console.log(`❌ 缓存未命中: ${songId}`);
     }
   }
 
+  // 创建新的请求Promise
+  const requestPromise = fetchLyrics(songId).then(result => {
+    // 成功获取歌词后缓存
+    if (result.success && useCache) {
+      console.log(`💾 缓存歌词: ${songId}`);
+      cacheLyrics(songId, result);
+    }
+    // 清理进行中的请求
+    pendingRequests.delete(requestKey);
+    return result;
+  }).catch(error => {
+    // 清理进行中的请求
+    pendingRequests.delete(requestKey);
+    throw error;
+  });
+
+  // 将请求Promise添加到进行中的请求映射中
+  pendingRequests.set(requestKey, requestPromise);
+
   // 从API获取歌词
   console.log(`📝 从API获取歌词: ${songId}`);
-  const result = await fetchLyrics(songId);
-
-  // 成功获取歌词后缓存
-  if (result.success && useCache) {
-    cacheLyrics(songId, result);
-  }
-
-  return result;
+  return requestPromise;
 }

@@ -80,7 +80,7 @@
                     <mdui-icon name="image" size="14" class="dropdown-icon"></mdui-icon>
                     <span class="dropdown-text">媒体</span>
                   </div>
-                  
+
                   <div class="dropdown-item" @click="handleDropdownOption('博客')">
                     <mdui-icon name="article" size="14" class="dropdown-icon"></mdui-icon>
                     <span class="dropdown-text">博客</span>
@@ -586,7 +586,7 @@ const connectSocket = () => {
 
   try {
     // 创建socket连接，指定完整的API路径
-    socket = io('https://me.jiclub.site', {
+    socket = io(`${import.meta.env.VITE_API_BASE_URL}`, {
       path: '/socket.io', // 修正路径，与服务端默认监听路径一致
       autoConnect: true,
       timeout: 5000, // 5秒超时
@@ -1562,7 +1562,7 @@ const fetchStatusData = async () => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5秒超时
 
-    const response = await fetch('https://me.jiclub.site/getStalin', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/getStalin`, {
       signal: controller.signal,
       method: 'GET',
       mode: 'cors',
@@ -1861,7 +1861,7 @@ const cyclingList = ref([]); // 用于存储骑行列表数据
 const fetchCyclingData = async () => {
   try {
     // 从API获取骑行数据
-    const response = await fetch('https://me.jiclub.site/Getxingzhe');
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/Getxingzhe`);
     const result = await response.json();
 
     // 检查API响应是否成功
@@ -1872,7 +1872,7 @@ const fetchCyclingData = async () => {
       // 获取详细信息
       if (latestRecord.id) {
         try {
-          const detailResponse = await fetch(`https://me.jiclub.site/Getxingzhe/${latestRecord.id}`);
+          const detailResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/Getxingzhe/${latestRecord.id}`);
           const detailResult = await detailResponse.json();
 
           if (detailResult.success && detailResult.data && detailResult.data.data) {

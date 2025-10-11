@@ -201,7 +201,7 @@ const fetchArticles = async () => {
     loading.value = true;
     try {
         // 从指定API获取数据
-        const response = await fetch('https://me.jiclub.site/getlifeabout');
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/getlifeabout`);
         if (!response.ok) {
             throw new Error('网络响应错误');
         }

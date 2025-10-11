@@ -16,7 +16,7 @@ const server = http.createServer(app);
 // ==================== 1. 统一CORS配置 ====================
 const ALLOWED_ORIGINS = [
   "http://localhost:3000",
-  "https://me.jiclub.site",
+  process.env.VITE_API_BASE_URL || "https://me.jiclub.site",
   "http://8.134.68.39:3000",
 ];
 
@@ -229,7 +229,7 @@ app.post("/baidu-stat/proxy", async (req, res) => {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-        Referer: "http://me.jiclub.site/",
+        Referer: process.env.VITE_API_BASE_URL || "http://me.jiclub.site/",
         Accept: "application/json, text/plain, */*",
         "Cache-Control": "no-cache",
       },

@@ -163,19 +163,6 @@ onMounted(() => {
     z-index: 10;
 }
 
-// // 确保App.vue中的全局样式不会影响到社交页面
-// :global(.main-content) {
-//     padding: 0 !important;
-//     min-height: 0 !important;
-//     // max-width: 100% !important;
-// }
-
-// :global(.router-view-content[data-route="/social-media"]) {
-//     .main-content {
-//         padding: 0 !important;
-//     }
-// }
-
 .social-media-container {
     position: fixed !important;
     top: 0 !important;
@@ -188,7 +175,7 @@ onMounted(() => {
     display: flex !important;
     flex-direction: column !important;
     background-color: white !important;
-    z-index: 10 !important;
+    z-index: 0 !important; // 修改z-index为0，确保不遮挡顶部导航栏
 
     // 固定在顶栏下方的内容区域
     .fixed-card-content {
@@ -230,7 +217,7 @@ onMounted(() => {
 /* 媒体标签区域样式 - 固定在AppBar下方 */
 .media-tabs {
     position: fixed;
-    top: 50px; // 位于AppBar下方
+    top: 5px; // 修改为56px，避开AppBar的高度
     left: 0;
     right: 0;
     background-color: white;
@@ -334,6 +321,7 @@ onMounted(() => {
 
     .media-tabs {
         padding: 6px 12px;
+        top: 56px; // 修改为56px，适配小屏幕
     }
 }
 

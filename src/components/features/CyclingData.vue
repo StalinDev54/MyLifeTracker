@@ -12,7 +12,7 @@
   </h3>
 
   <div class="cycling-footer">
-    <div class="cycling-date">同步更新于 {{ formatDateTime(cyclingData.start_time) }}</div>
+    <div class="cycling-date">最后更新于 {{ formatDateTime(cyclingData.start_time) }}</div>
   </div>
 
   <!-- 点击整个卡片区域触发弹窗 -->

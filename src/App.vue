@@ -312,16 +312,15 @@ const destroyListenTogetherInstance = () => {
 <template>
   <s-appbar class="app-bar">
     <!-- 根据路由显示不同的左侧按钮 -->
-    <template v-if="route.path === '/social-media'">
+
+
+    <template v-if="route.path === '/realtime-visitors'">
       <s-icon-button @click="handleBack" slot="navigation">
         <s-icon name="arrow_back"></s-icon>
       </s-icon-button>
     </template>
-    <template v-else-if="route.path === '/realtime-visitors'">
-      <s-icon-button @click="handleBack" slot="navigation">
-        <s-icon name="arrow_back"></s-icon>
-      </s-icon-button>
-    </template>
+
+
     <template v-else>
       <s-icon-button slot="navigation">
         <s-icon name="menu"></s-icon>

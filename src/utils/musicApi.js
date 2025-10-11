@@ -1,7 +1,7 @@
 // 音乐 API 工具函数 - 基于Socket.IO实时推送
 import { io } from "socket.io-client";
 
-const MUSIC_API_URL = "https://me.jiclub.site/api/cloudmusic";
+const MUSIC_API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/cloudmusic`;
 let mainSocket = null;
 let musicDataCallbacks = new Set();
 let currentMusicData = {
@@ -57,7 +57,7 @@ const connectMusicSocket = () => {
 
   try {
     // 创建socket连接
-    const socket = io("https://me.jiclub.site", {
+    const socket = io(import.meta.env.VITE_API_BASE_URL, {
       path: "/socket.io",
       autoConnect: true,
       timeout: 5000,

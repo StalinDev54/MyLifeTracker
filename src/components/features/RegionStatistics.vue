@@ -1073,7 +1073,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 480px) {
   .region-stats-content {
-    padding: 12px 16px;
+    /* padding: 12px 16px; */
   }
 
   .region-chart-section {

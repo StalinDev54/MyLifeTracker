@@ -181,7 +181,7 @@ export default defineConfig({
 
       // 百度统计安全代理（后端Node.js服务）
       "/baidu-stat/proxy": {
-        target: "https://me.jiclub.site", // 后端安全代理服务地址
+        target: "http://localhost:3000", // 后端服务器地址
         changeOrigin: true,
         secure: false,
         ws: false,
