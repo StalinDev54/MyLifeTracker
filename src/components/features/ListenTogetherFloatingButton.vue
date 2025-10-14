@@ -96,19 +96,6 @@ export default {
       },
       deep: true
     },
-    // 监听播放状态变化，控制音频播放器
-    isPlaying: {
-      handler(newVal) {
-        // 只有在用户已经加入一起听（打开过弹窗）的情况下才控制音频播放器
-        if (this.userInteracted && this.audioPlayer) {
-          if (newVal) {
-            playAudio(this.audioPlayer, this.userInteracted);
-          } else {
-            pauseAudio(this.audioPlayer);
-          }
-        }
-      }
-    },
     // 监听播放位置变化，同步音频播放器进度
     currentPosition: {
       handler(newPosition) {
@@ -177,6 +164,26 @@ export default {
       try {
         // 检查是否需要重新获取音频URL（歌曲ID发生变化时）
         if (!this.audioUrl || this.currentSongId !== song.id) {
+          console.log('🎵 歌曲ID发生变化，需要加载新歌曲:', song.id);
+
+          // 在获取新歌曲URL之前，先完全停止并清理当前播放器
+          if (this.audioPlayer) {
+            console.log('🎵 完全停止并清理当前播放器');
+            // 移除所有事件监听器
+            this.audioPlayer.removeEventListener('timeupdate', this.handleTimeUpdate);
+            this.audioPlayer.removeEventListener('ended', this.handlePlaybackEnded);
+            this.audioPlayer.removeEventListener('play', this.handlePlay);
+            this.audioPlayer.removeEventListener('pause', this.handlePause);
+            // 暂停播放
+            this.audioPlayer.pause();
+            // 重置播放器状态
+            this.audioPlayer.currentTime = 0;
+            // 清空src
+            this.audioPlayer.src = '';
+            // 设置为null以确保完全释放
+            this.audioPlayer = null;
+          }
+
           console.log('🎵 获取新歌曲的音频URL:', song.id);
           // 获取音乐播放URL
           const audioUrl = await fetchMusicUrl(song.id);
@@ -188,17 +195,21 @@ export default {
           // 更新缓存
           this.audioUrl = audioUrl;
           this.currentSongId = song.id;
+
+          // 创建新的音频播放器
+          console.log('🎵 创建新的音频播放器');
+          this.audioPlayer = createAudioPlayer(this.audioUrl);
+
+          // 添加播放事件监听器
+          this.audioPlayer.addEventListener('timeupdate', this.handleTimeUpdate);
+          this.audioPlayer.addEventListener('ended', this.handlePlaybackEnded);
+          this.audioPlayer.addEventListener('play', this.handlePlay);
+          this.audioPlayer.addEventListener('pause', this.handlePause);
         }
 
-        // 创建或更新音频播放器
-        if (this.audioPlayer) {
-          // 如果播放器已存在且URL未改变，则不需要重新设置src
-          if (this.audioPlayer.src !== this.audioUrl) {
-            console.log('🎵 更新音频播放器URL');
-            this.audioPlayer.src = this.audioUrl;
-          }
-        } else {
-          console.log('🎵 创建新的音频播放器');
+        // 确保播放器存在
+        if (!this.audioPlayer) {
+          console.log('🎵 播放器不存在，创建新的音频播放器');
           this.audioPlayer = createAudioPlayer(this.audioUrl);
 
           // 添加播放事件监听器
@@ -212,11 +223,24 @@ export default {
         // socket推送的状态优先级最高
         if (this.isPlaying && this.currentPosition >= 0) {
           console.log('🎵 根据socket状态开始播放');
+          // 同步播放位置后再播放
+          if (Math.abs(this.audioPlayer.currentTime - this.currentPosition) > 0.1) {
+            console.log('🎵 同步播放位置到:', this.currentPosition);
+            this.audioPlayer.currentTime = this.currentPosition;
+          }
           await playAudio(this.audioPlayer, this.userInteracted);
         } else if (!this.isPlaying && this.audioPlayer && !this.audioPlayer.paused) {
           // 如果socket推送的是暂停状态，且音频正在播放，则暂停
           console.log('🎵 根据socket状态暂停播放');
           pauseAudio(this.audioPlayer);
+        } else if (this.isPlaying && this.audioPlayer.paused) {
+          // 如果socket推送的是播放状态，但音频暂停了，则同步位置并播放
+          console.log('🎵 同步位置并恢复播放');
+          if (Math.abs(this.audioPlayer.currentTime - this.currentPosition) > 0.1) {
+            console.log('🎵 同步播放位置到:', this.currentPosition);
+            this.audioPlayer.currentTime = this.currentPosition;
+          }
+          await playAudio(this.audioPlayer, this.userInteracted);
         }
 
         // 同步播放位置（使用更小的阈值确保精确同步）

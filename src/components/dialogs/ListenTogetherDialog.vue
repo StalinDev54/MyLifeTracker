@@ -179,7 +179,12 @@ export default {
         'currentSong.id': {
             handler(newId, oldId) {
                 if (newId && newId !== oldId) {
-                    this.loadLyricsForSong(this.currentSong);
+                    // 在歌曲切换时，立即重置歌词状态，避免显示旧歌词
+                    this.resetLyricsState();
+                    // 延迟加载新歌词，确保UI更新
+                    this.$nextTick(() => {
+                        this.loadLyricsForSong(this.currentSong);
+                    });
                 }
             },
             immediate: true
@@ -297,6 +302,9 @@ export default {
             }
         },
         async loadLyricsForSong(song) {
+            // 在开始加载新歌词前，先重置状态
+            this.resetLyricsState();
+            
             if (!song || !song.id) {
                 this.resetLyricsState();
                 return;
@@ -318,6 +326,13 @@ export default {
 
                 const result = await fetchLyricsWithCache(songId, true);
 
+                // 检查当前歌曲是否仍然是我们要加载歌词的歌曲
+                // 防止在异步加载过程中歌曲已经切换
+                if (this.currentSong.id !== songId) {
+                    console.log('🎵 歌曲已切换，取消当前歌词加载');
+                    return;
+                }
+
                 if (result.success && result.lyrics && result.lyrics.length > 0) {
                     this.currentLyrics = result.lyrics;
                     this.currentLyricIndex = 0;
@@ -331,11 +346,17 @@ export default {
                     this.lyricsError = result.error || '暂无歌词';
                 }
             } catch (error) {
-                console.error(`🎵 加载歌词失败:`, error);
-                this.currentLyrics = [];
-                this.lyricsError = '加载歌词失败';
+                // 再次检查歌曲是否已切换
+                if (this.currentSong.id === songId) {
+                    console.error(`🎵 加载歌词失败:`, error);
+                    this.currentLyrics = [];
+                    this.lyricsError = '加载歌词失败';
+                }
             } finally {
-                this.lyricsLoading = false;
+                // 再次检查歌曲是否已切换
+                if (this.currentSong.id === songId) {
+                    this.lyricsLoading = false;
+                }
             }
         },
         resetLyricsState() {
