@@ -304,7 +304,7 @@ export default {
         async loadLyricsForSong(song) {
             // 在开始加载新歌词前，先重置状态
             this.resetLyricsState();
-            
+
             if (!song || !song.id) {
                 this.resetLyricsState();
                 return;
@@ -907,13 +907,13 @@ export default {
 
 .lyrics-section {
     flex: 1;
-    min-height: 90px;
+    min-height: 100px;
     padding: 0 10px;
     overflow: hidden;
 }
 
 .lyrics-container {
-    height: 100px;
+    height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
