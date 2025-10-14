@@ -919,7 +919,7 @@ export default {
 }
 
 .lyric-line.current-lyric {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
     color: #8355ff;
     transform: scale(1.05);
@@ -1036,7 +1036,7 @@ export default {
     }
 
     .lyric-line.current-lyric {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .control-button {
@@ -1070,7 +1070,7 @@ export default {
     }
 
     .lyric-line.current-lyric {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 700;
         color: #8355ff;
         transform: scale(1.05);

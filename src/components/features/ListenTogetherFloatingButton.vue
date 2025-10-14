@@ -136,6 +136,9 @@ export default {
 
   methods: {
     async showDialog() {
+      // 显示"正在加入中"提示
+      Snackbar.builder('正在加入一起听');
+
       this.isDialogVisible = true;
       // Snackbar.builder('已加入一起听~')
       // 显示弹窗时显示悬浮球，表示用户已加入一起听
