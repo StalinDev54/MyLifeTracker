@@ -442,6 +442,9 @@ export default {
     // 初始化歌词状态
     this.resetLyricsState();
 
+    // 添加页面关闭事件监听器，确保Socket连接被正确断开
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+
     // 注意：现在不立即加载音乐数据，而是依赖于ProfileView.vue中已经初始化好的Socket连接
     // 但为了防止网络问题，添加一个延迟加载作为备用方案
     setTimeout(() => {
@@ -495,6 +498,9 @@ export default {
 
     // 移除滚动事件监听
     this.removeScrollListener();
+    
+    // 移除页面关闭事件监听器
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
   methods: {
     // 设置页面滚动监听 - 仅在电脑端启用
@@ -1168,6 +1174,12 @@ export default {
     // 解析LRC格式歌词（供组件内部使用）
     parseLRCLyrics(lrcText) {
       return parseLRCLyrics(lrcText);
+    },
+    
+    // 添加处理页面关闭的函数
+    handleBeforeUnload() {
+      // 断开音乐Socket连接
+      disconnectMusicSocket();
     }
   }
 };

@@ -336,7 +336,24 @@ export default {
       console.log('🎵 接收到ListenTogetherDialog的位置更新事件:', newPosition);
       // 将位置更新事件传递给父组件
       this.$emit('update:currentPosition', newPosition);
+    },
+    // 添加处理页面关闭的函数
+    handleBeforeUnload() {
+      // 清理音频播放器并暂停播放
+      if (this.audioPlayer) {
+        this.audioPlayer.pause();
+        this.audioPlayer = null;
+      }
+
+      // 重置缓存
+      this.audioUrl = null;
+      this.currentSongId = null;
     }
+  },
+
+  mounted() {
+    // 添加页面关闭事件监听器，确保音频播放器被正确清理
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
   },
 
   beforeUnmount() {
@@ -349,6 +366,9 @@ export default {
     // 清理缓存
     this.audioUrl = null;
     this.currentSongId = null;
+    
+    // 移除页面关闭事件监听器
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
 };
 </script>

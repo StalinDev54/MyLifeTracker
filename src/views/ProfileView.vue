@@ -878,25 +878,30 @@ const handleLogsUpdate = (logsData) => {
 // 断开Socket.IO连接
 const disconnectSocket = () => {
   if (socket) {
-    // 先移除所有事件监听器
-    socket.off('connect');
-    socket.off('onlineUsersUpdate');
-    socket.off('logsUpdate');
-    socket.off('disconnect');
-    socket.off('connect_error');
-    socket.off('reconnect_attempt');
-    socket.off('reconnect');
-    socket.off('reconnect_failed');
+    try {
+      // 先移除所有事件监听器
+      socket.off('connect');
+      socket.off('onlineUsersUpdate');
+      socket.off('logsUpdate');
+      socket.off('disconnect');
+      socket.off('connect_error');
+      socket.off('reconnect_attempt');
+      socket.off('reconnect');
+      socket.off('reconnect_failed');
 
-    // 断开连接
-    socket.disconnect();
-    socket = null;
-
-    // 更新状态
-    socketConnected.value = false;
-    socketId.value = '';
-
-    console.log('Socket.IO连接已断开并清理资源');
+      // 断开连接
+      socket.disconnect();
+      
+      console.log('Socket.IO连接已断开并清理资源');
+    } catch (error) {
+      console.error('断开Socket.IO连接时出错:', error);
+    } finally {
+      // 更新状态
+      socketConnected.value = false;
+      socketId.value = '';
+      // 确保socket引用被清除
+      socket = null;
+    }
   }
 };
 
@@ -1007,6 +1012,9 @@ onMounted(() => {
 
   // 添加事件监听器
   window.addEventListener('regionDataUpdated', handleRegionDataUpdate);
+  
+  // 添加页面关闭事件监听器，确保Socket连接被正确断开
+  window.addEventListener('beforeunload', handleBeforeUnload);
 
   // 从localStorage尝试获取之前保存的地域数据
   try {
@@ -1035,6 +1043,9 @@ onUnmounted(() => {
 
   // 移除地域数据更新事件监听器
   window.removeEventListener('regionDataUpdated', handleRegionDataUpdate);
+  
+  // 移除页面关闭事件监听器
+  window.removeEventListener('beforeunload', handleBeforeUnload);
 });
 
 // 状态数据
@@ -2135,6 +2146,14 @@ const handleAvatarDoubleClick = () => {
   const randomMessage = getRandomFeedback();
   Snackbar.builder(randomMessage);
 }
+
+// 添加处理页面关闭的函数
+const handleBeforeUnload = () => {
+  // 断开Socket.IO连接
+  disconnectSocket();
+  // 断开音乐Socket连接
+  disconnectMusicSocket();
+};
 
 </script>
 

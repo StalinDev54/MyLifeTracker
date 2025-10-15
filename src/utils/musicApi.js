@@ -284,26 +284,31 @@ export const offMusicDataUpdate = (callback) => {
  */
 export const disconnectMusicSocket = () => {
   if (mainSocket) {
-    mainSocket.off("connect");
-    mainSocket.off("cloudmusicUpdate");
-    mainSocket.off("disconnect");
-    mainSocket.off("connect_error");
-    mainSocket.off("reconnect");
+    try {
+      // 移除所有事件监听器
+      mainSocket.off("connect");
+      mainSocket.off("cloudmusicUpdate");
+      mainSocket.off("disconnect");
+      mainSocket.off("connect_error");
+      mainSocket.off("reconnect");
 
-    // 注意：如果是使用的主Socket实例，我们不应该断开它，只移除事件监听器
-    // 只有独立创建的音乐Socket才需要断开连接
-    const isMainSocket = mainSocket.id && mainSocket.connected;
-    if (isMainSocket && !mainSocket._isMainSocket) {
-      // 只有独立创建的音乐Socket才断开连接
-      mainSocket.disconnect();
+      // 注意：如果是使用的主Socket实例，我们不应该断开它，只移除事件监听器
+      // 只有独立创建的音乐Socket才需要断开连接
+      const isMainSocket = mainSocket.id && mainSocket.connected;
+      if (isMainSocket && !mainSocket._isMainSocket) {
+        // 只有独立创建的音乐Socket才断开连接
+        mainSocket.disconnect();
+      }
+      
+      console.log("🎵 音乐Socket.IO连接已断开并清理资源");
+    } catch (error) {
+      console.error("断开音乐Socket.IO连接时出错:", error);
+    } finally {
+      mainSocket = null;
+
+      // 清空回调函数
+      musicDataCallbacks.clear();
     }
-    
-    mainSocket = null;
-
-    // 清空回调函数
-    musicDataCallbacks.clear();
-
-    console.log("🎵 音乐Socket.IO连接已断开并清理资源");
   }
 };
 
