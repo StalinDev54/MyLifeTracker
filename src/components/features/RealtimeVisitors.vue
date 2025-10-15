@@ -621,12 +621,14 @@ const dialogUserInfo = computed(() => {
 /* 确保在所有屏幕尺寸下骨架屏卡片保持良好显示 */
 @media (max-width: 000px) {
   .skeleton-card {
+    width: 100%;
     padding: 12px 16px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 680px) {
   .skeleton-card {
+    width: 100%;
     padding: 10px 12px;
   }
 }
@@ -777,7 +779,7 @@ const dialogUserInfo = computed(() => {
   font-weight: 500;
 }
 
-/* 移动端适配优化 */
+/* 移动端适配优化
 @media (max-width: 480px) {
   .pagination-dots {
     gap: 6px;
@@ -791,7 +793,7 @@ const dialogUserInfo = computed(() => {
   .dot.active {
     width: 20px;
   }
-}
+} */
 
 /* 单张卡片 */
 .card {
@@ -803,8 +805,8 @@ const dialogUserInfo = computed(() => {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 350px;
-  min-height: 120px;
+  width: 100%;
+  min-height: 140px;
   box-sizing: border-box;
 }
 
@@ -929,7 +931,7 @@ const dialogUserInfo = computed(() => {
 }
 
 /* 移动端适配（屏幕宽度≤480px时） */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .app-launch-records {
     padding: 12px;
   }
@@ -983,10 +985,10 @@ const dialogUserInfo = computed(() => {
     font-size: 11px;
     padding: 3px 8px;
   }
-}
+} */
 
 /* 更窄的移动端适配 */
-@media (max-width: 360px) {
+/* @media (max-width: 360px) {
   .skeleton-container {
     gap: 10px;
     padding: 4px 0;
@@ -1026,5 +1028,5 @@ const dialogUserInfo = computed(() => {
   .launch-time {
     font-size: 11px;
   }
-}
+} */
 </style>
