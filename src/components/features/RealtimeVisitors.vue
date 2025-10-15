@@ -2,9 +2,9 @@
   <!-- 骨架屏作为单独的v-if组件，不在app-launch-records内部 -->
   <div v-if="loading" class="skeleton-outer-container">
     <iOSPullToRefresh :refreshing="isRefreshing" @refresh="handleRefresh">
-      <div style="width: 300px; margin: 30px;" v-for="index in 5" :key="`skeleton-${index}`">
+      <div style="width: 100%; margin: 30px;" v-for="index in 5" :key="`skeleton-${index}`">
         <div style="display: flex; align-items: center">
-          <s-skeleton style="width: 72px; height: 72px"></s-skeleton>
+          <s-skeleton style="width: 72px; height: 82px"></s-skeleton>
           <div style="flex-grow: 1; margin-left: 16px">
             <s-skeleton></s-skeleton>
             <s-skeleton style="margin-top: 8px"></s-skeleton>
@@ -929,104 +929,4 @@ const dialogUserInfo = computed(() => {
   color: #606266;
   background-color: #f4f4f5;
 }
-
-/* 移动端适配（屏幕宽度≤480px时） */
-/* @media (max-width: 480px) {
-  .app-launch-records {
-    padding: 12px;
-  }
-
-  .skeleton-container {
-    gap: 12px;
-    padding: 6px 0;
-  }
-
-  .skeleton-card {
-    padding: 12px 16px;
-    min-height: 100px;
-  }
-
-  .card {
-    padding: 12px 16px;
-    min-height: 100px;
-  }
-
-  .card-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
-    margin-right: 12px;
-  }
-
-  .device-name {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .device-details {
-    font-size: 13px;
-    margin-bottom: 3px;
-  }
-
-  .device-meta {
-    font-size: 12px;
-  }
-
-  .card-meta {
-    padding-left: 12px;
-  }
-
-  .launch-time {
-    font-size: 12px;
-    margin-bottom: 6px;
-  }
-
-  .status-tag {
-    font-size: 11px;
-    padding: 3px 8px;
-  }
-} */
-
-/* 更窄的移动端适配 */
-/* @media (max-width: 360px) {
-  .skeleton-container {
-    gap: 10px;
-    padding: 4px 0;
-  }
-
-  .skeleton-card {
-    padding: 10px 12px;
-  }
-
-  .card {
-    padding: 10px 12px;
-  }
-
-  .card-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
-    margin-right: 10px;
-  }
-
-  .device-name {
-    font-size: 14px;
-  }
-
-  .device-details {
-    font-size: 12px;
-  }
-
-  .device-meta {
-    font-size: 11px;
-  }
-
-  .card-meta {
-    padding-left: 10px;
-  }
-
-  .launch-time {
-    font-size: 11px;
-  }
-} */
 </style>
