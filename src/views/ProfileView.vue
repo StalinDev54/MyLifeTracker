@@ -790,7 +790,7 @@ const handleLogsUpdate = (logsData) => {
       // 如果正在播放音乐，显示音乐图标（优先级最高）
       if (musicPlayingState.value.isPlaying) {
         // currentStatus.value.label = musicPlayingState.value.trackName || '正在播放音乐';
-        // currentStatus.value.color = '#2196F3'; // 音乐播放时使用蓝色
+        currentStatus.value.color = '#757575'; // 音乐播放时使用蓝色
         currentStatus.value.icon = 'headphones';
       }
 
@@ -891,7 +891,7 @@ const disconnectSocket = () => {
 
       // 断开连接
       socket.disconnect();
-      
+
       console.log('Socket.IO连接已断开并清理资源');
     } catch (error) {
       console.error('断开Socket.IO连接时出错:', error);
@@ -963,7 +963,7 @@ const updateStatusWithMusic = () => {
     // 如果正在播放音乐，显示音乐图标（优先级最高）
     currentStatus.value.icon = 'headphones';
     // 确保颜色为蓝色
-    currentStatus.value.color = '#2196F3';
+    currentStatus.value.color = '#757575';
   } else {
     // 如果音乐暂停，恢复原始图标
     // 为了避免影响智能化用户状态判断的结果，我们需要重新获取并应用当前状态的图标
@@ -1012,7 +1012,7 @@ onMounted(() => {
 
   // 添加事件监听器
   window.addEventListener('regionDataUpdated', handleRegionDataUpdate);
-  
+
   // 添加页面关闭事件监听器，确保Socket连接被正确断开
   window.addEventListener('beforeunload', handleBeforeUnload);
 
@@ -1043,7 +1043,7 @@ onUnmounted(() => {
 
   // 移除地域数据更新事件监听器
   window.removeEventListener('regionDataUpdated', handleRegionDataUpdate);
-  
+
   // 移除页面关闭事件监听器
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
