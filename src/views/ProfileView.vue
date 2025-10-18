@@ -963,7 +963,7 @@ const updateStatusWithMusic = () => {
     // 如果正在播放音乐，显示音乐图标（优先级最高）
     currentStatus.value.icon = 'headphones';
     // 确保颜色为蓝色
-    currentStatus.value.color = '#757575';
+    // currentStatus.value.color = '#757575';
   } else {
     // 如果音乐暂停，恢复原始图标
     // 为了避免影响智能化用户状态判断的结果，我们需要重新获取并应用当前状态的图标
