@@ -790,7 +790,7 @@ const handleLogsUpdate = (logsData) => {
       // 如果正在播放音乐，显示音乐图标（优先级最高）
       if (musicPlayingState.value.isPlaying) {
         // currentStatus.value.label = musicPlayingState.value.trackName || '正在播放音乐';
-        currentStatus.value.color = '#757575'; // 音乐播放时使用蓝色
+        // currentStatus.value.color = '#757575'; // 音乐播放时使用蓝色
         currentStatus.value.icon = 'headphones';
       }
 
