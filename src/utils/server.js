@@ -9,15 +9,28 @@ const { Server } = require("socket.io");
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
 
+// 加载环境变量
+require("dotenv").config();
+
 // 初始化Express应用
 const app = express();
 const server = http.createServer(app);
+// curl -X POST "https://www.imxingzhe.com/oauth2/v2/access_token/" `
+//   -H "Authorization: Bearer OGRhNWUwZTg1NzM2YzQ2MTJlNzQ6Mjg1YTkwM2RmNzZjMTVlZDZhNWEzNWYyMjk3OGQwZWJiNWY5NmUwNQ==" `
+//   -H "Content-Type: multipart/form-data" `
+//   -F "grant_type=refresh_token" `
+//   -F "refresh_token=f381dce72fb314f4f37ef13819b7fd500584e119"
 
-// ==================== 1. 统一CORS配置 ====================
+// // ==================== 1. 统一CORS配置
+//
+//
+//
+// ====================
 const ALLOWED_ORIGINS = [
   "http://localhost:3000",
-  process.env.VITE_API_BASE_URL || "https://me.jiclub.site",
-  "http://8.134.68.39:3000",
+  "https://me.jiclub.site",
+  "https://life.jiclub.site",
+  "https://api.jiclub.site",
 ];
 
 const io = new Server(server, {
@@ -29,16 +42,20 @@ const io = new Server(server, {
 });
 
 // ==================== 2. 核心配置 ====================
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 let onlineUsers = 0;
+
 const BAIDU_STAT_TOKEN =
+  process.env.BAIDU_STAT_TOKEN ||
   "121.7b81645d64c75f66adbee204986c78ee.YQKxoK2R3PI9JZ5cERFAPAR_1wP0LWicpPR3rB5.79LeNA";
-const websiteRoot = "/www/wwwroot/me.jiclub.site";
-const jsDirectory = "/www/wwwroot/node";
+const websiteRoot = process.env.WEBSITE_ROOT || "/www/wwwroot/me.jiclub.site";
+const jsDirectory = process.env.JS_DIRECTORY || "/www/wwwroot/node";
 const DATA_FILE = path.join(__dirname, "lifelogs.json");
 const CLOUDMUSIC_DATA_FILE = path.join(__dirname, "cloudmusic_logs.json");
-const SECRET_KEY = "1545433540";
+const FOCUS_TASKS_FILE = path.join(__dirname, "focus_tasks.json"); // 新增专注任务数据文件
+const SECRET_KEY = process.env.SECRET_KEY || "1545433540";
 const SCRAPE_TARGET_URL =
+  process.env.SCRAPE_TARGET_URL ||
   "https://jiclub.site/archives.php?user=36b175225d6773fc1a739acdd8834664";
 let writeQueue = Promise.resolve();
 const CLOUDMUSIC_LOG_LIMIT = 15;
@@ -65,6 +82,22 @@ function checkCriticalFiles() {
     );
   } else {
     console.log(`【初始化】云音乐日志文件存在：${CLOUDMUSIC_DATA_FILE}`);
+  }
+
+  // 新增专注任务文件初始化检查
+  if (!fs.existsSync(FOCUS_TASKS_FILE)) {
+    const initialFocusTasks = {
+      inProgress: [],
+      pending: [],
+    };
+    fs.writeFileSync(
+      FOCUS_TASKS_FILE,
+      JSON.stringify(initialFocusTasks, null, 2),
+      "utf8"
+    );
+    console.log(`【初始化】专注任务文件不存在，已创建：${FOCUS_TASKS_FILE}`);
+  } else {
+    console.log(`【初始化】专注任务文件存在：${FOCUS_TASKS_FILE}`);
   }
 }
 checkCriticalFiles();
@@ -229,7 +262,7 @@ app.post("/baidu-stat/proxy", async (req, res) => {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-        Referer: process.env.VITE_API_BASE_URL || "http://me.jiclub.site/",
+        Referer: "http://me.jiclub.site/",
         Accept: "application/json, text/plain, */*",
         "Cache-Control": "no-cache",
       },
@@ -262,7 +295,11 @@ app.get("/", (req, res) => {
       getCloudmusicLogs: "GET /api/cloudmusic（获取音乐播放日志，默认15条）",
       addCloudmusicLog:
         "POST /api/cloudmusic（添加音乐播放日志，需鉴权，支持任意参数）",
+      getFocusTasks: "GET /api/focus-tasks（获取专注任务）",
+      updateFocusTasks: "POST /api/focus-tasks（更新专注任务，需鉴权）",
       baiduStat: "POST /baidu-stat/proxy（安全获取百度统计数据）",
+      getXingzhe: "GET /Getxingzhe（获取行者运动数据）",
+      getXingzheDetail: "GET /Getxingzhe/:id（获取指定ID的行者运动详情）",
     },
     socketIO:
       "已启用（实时事件：onlineUsersUpdate, logsUpdate, cloudmusicUpdate）",
@@ -437,6 +474,277 @@ app.get("/getStalin", async (req, res) => {
   }
 });
 
+// 7.5 新增专注任务API
+// 7.5.1 GET - 获取专注任务
+app.get("/api/focus-tasks", async (req, res) => {
+  try {
+    console.log(`【专注任务】GET请求 - 来源：${req.ip}`);
+    const focusTasks = await readFocusTasks();
+
+    res.status(200).json({
+      success: true,
+      data: focusTasks,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error(`【专注任务】GET错误：${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: "服务器内部错误",
+      detail: "读取专注任务失败",
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+// 7.5.2 POST - 添加/更新专注任务
+app.post("/api/focus-tasks", async (req, res) => {
+  try {
+    const authKey = req.headers["x-auth-key"];
+    if (authKey !== SECRET_KEY) {
+      console.warn(`【专注任务】POST鉴权失败 - 来源：${req.ip}`);
+      return res.status(403).json({
+        success: false,
+        error: "禁止访问",
+        detail: "鉴权密钥错误（X-Auth-Key不匹配）",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const { inProgress, pending } = req.body;
+
+    // 验证数据结构
+    if (!Array.isArray(inProgress) || !Array.isArray(pending)) {
+      return res.status(400).json({
+        success: false,
+        error: "数据格式错误",
+        detail: "inProgress 和 pending 必须是数组",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // 验证任务项结构
+    const validateTask = (task) => {
+      if (!task.name || typeof task.name !== "string") {
+        return false;
+      }
+
+      if (task.status && !["in-progress", "pending"].includes(task.status)) {
+        return false;
+      }
+
+      if (
+        task.estimatedDuration &&
+        typeof task.estimatedDuration !== "number"
+      ) {
+        return false;
+      }
+
+      if (task.startTime && typeof task.startTime !== "number") {
+        return false;
+      }
+
+      if (task.accumulatedTime && typeof task.accumulatedTime !== "number") {
+        return false;
+      }
+
+      return true;
+    };
+
+    // 验证所有任务
+    const allValid = [...inProgress, ...pending].every(validateTask);
+    if (!allValid) {
+      return res.status(400).json({
+        success: false,
+        error: "数据格式错误",
+        detail: "任务项格式不正确",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const focusTasks = { inProgress, pending };
+    await writeFocusTasks(focusTasks);
+
+    // 实时推送更新（如果需要）
+    // io.emit("focusTasksUpdate", focusTasks);
+
+    res.status(200).json({
+      success: true,
+      message: "专注任务更新成功",
+      data: focusTasks,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error(`【专注任务】POST错误：${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: "服务器内部错误",
+      detail: "处理专注任务失败",
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+// 7.5.3 POST - 任务状态转换接口（开始/暂停）
+app.post("/api/focus-tasks/toggle", async (req, res) => {
+  try {
+    const authKey = req.headers["x-auth-key"];
+    if (authKey !== SECRET_KEY) {
+      console.warn(`【专注任务】POST鉴权失败 - 来源：${req.ip}`);
+      return res.status(403).json({
+        success: false,
+        error: "禁止访问",
+        detail: "鉴权密钥错误（X-Auth-Key不匹配）",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const { taskId, action } = req.body;
+
+    if (!taskId || !action) {
+      return res.status(400).json({
+        success: false,
+        error: "参数缺失",
+        detail: "taskId 和 action 是必需的",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    if (!["start", "pause"].includes(action)) {
+      return res.status(400).json({
+        success: false,
+        error: "参数错误",
+        detail: "action 必须是 'start' 或 'pause'",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // 获取当前任务数据
+    const currentTasks = await readFocusTasks();
+
+    let taskFound = false;
+    let updatedTask = null;
+
+    // 查找进行中的任务
+    if (action === "pause") {
+      const taskIndex = currentTasks.inProgress.findIndex(
+        (t) => t.id === taskId
+      );
+      if (taskIndex !== -1) {
+        taskFound = true;
+        // 将任务从进行中移动到待办
+        const [task] = currentTasks.inProgress.splice(taskIndex, 1);
+        task.status = "pending";
+        // 计算并保存累计时间
+        if (task.startTime) {
+          const elapsed = Math.floor((Date.now() - task.startTime) / 1000);
+          task.accumulatedTime = (task.accumulatedTime || 0) + elapsed;
+          delete task.startTime;
+        }
+        currentTasks.pending.push(task);
+        updatedTask = task;
+      }
+    }
+    // 查找待办的任务
+    else if (action === "start") {
+      const taskIndex = currentTasks.pending.findIndex((t) => t.id === taskId);
+      if (taskIndex !== -1) {
+        taskFound = true;
+        // 将任务从待办移动到进行中
+        const [task] = currentTasks.pending.splice(taskIndex, 1);
+        task.status = "in-progress";
+        task.startTime = Date.now();
+        currentTasks.inProgress.push(task);
+        updatedTask = task;
+      }
+    }
+
+    if (!taskFound) {
+      return res.status(404).json({
+        success: false,
+        error: "任务未找到",
+        detail: "指定的任务不存在或状态不正确",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // 保存更新后的任务数据
+    await writeFocusTasks(currentTasks);
+
+    res.status(200).json({
+      success: true,
+      message: action === "start" ? "任务已开始" : "任务已暂停",
+      data: {
+        task: updatedTask,
+        allTasks: currentTasks,
+      },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error(`【专注任务】切换状态错误：${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: "服务器内部错误",
+      detail: "处理任务状态切换失败",
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+app.get("/Getxingzhe", async (req, res) => {
+  try {
+    console.log(`【接口请求】GET /Getxingzhe - 来源：${req.ip}`);
+
+    // 行者运动API配置
+    const XINGZHE_API_URL = "https://www.imxingzhe.com/openapi/v1/activities";
+    const XINGZHE_TOKEN =
+      process.env.XINGZHE_TOKEN || "be972c4bab76fd44cee8de08f2209531e7a75f95";
+
+    // 获取查询参数，使用limit和offset分页（与API保持一致）
+    const limit = parseInt(req.query.limit) || 10; // 每页数量，默认10
+    const offset = parseInt(req.query.offset) || 0; // 偏移量，默认从0开始
+
+    // 构建API请求URL（使用limit和offset）
+    const apiUrl = new URL(XINGZHE_API_URL);
+    apiUrl.searchParams.append("limit", limit); // 控制每页数量
+    apiUrl.searchParams.append("offset", offset); // 控制分页位置
+
+    // 打印请求URL以便调试
+    console.log("行者API请求地址：", apiUrl.toString());
+
+    // 发送请求到行者运动API
+    const response = await axios.get(apiUrl.toString(), {
+      headers: {
+        Authorization: `Bearer ${XINGZHE_TOKEN}`,
+        "Content-Type": "application/json",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+    });
+
+    // 返回成功响应（包含分页信息）
+    res.status(200).json({
+      success: true,
+      data: response.data, // 包含count、next、previous、results
+      pagination: {
+        limit,
+        offset,
+        total: response.data.count,
+        hasMore: !!response.data.next, // 是否有下一页
+      },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error(`【行者运动API】请求失败：${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: "行者运动数据获取失败",
+      detail: error.response?.data || error.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
 app.post("/postStalin", async (req, res) => {
   try {
     const authKey = req.headers["x-auth-key"];
@@ -465,13 +773,23 @@ app.post("/postStalin", async (req, res) => {
     );
     const latestSameDeviceLog =
       sameDeviceLogs.length > 0 ? sameDeviceLogs[0] : null;
+
+    // 判断是否为状态切换（锁屏/解锁）
     const isStatusSwitch = latestSameDeviceLog
       ? latestSameDeviceLog.status !== newLogEntry.status
       : false;
 
+    // 判断是否为同一状态下的电量更新
+    const isBatteryUpdate =
+      latestSameDeviceLog &&
+      latestSameDeviceLog.status === newLogEntry.status &&
+      (latestSameDeviceLog.battery !== newLogEntry.battery ||
+        latestSameDeviceLog.is_charging !== newLogEntry.is_charging);
+
     let firstLockRecord = null;
 
     if (isStatusSwitch) {
+      // 状态切换处理逻辑（保持原有逻辑）
       if (newLogEntry.status === false) {
         firstLockRecord = {
           device: newLogEntry.device,
@@ -504,7 +822,46 @@ app.post("/postStalin", async (req, res) => {
 
       logs.unshift(newEntry);
       responseEntry = newEntry;
+    } else if (isBatteryUpdate && newLogEntry.status === true) {
+      // 对于非锁屏状态下（status=true）的电量更新，更新现有记录而不是创建新记录
+      const targetLogIndex = logs.findIndex(
+        (log) => log.device === newLogEntry.device && log.status === true
+      );
+
+      if (targetLogIndex !== -1) {
+        // 更新现有非锁屏记录的电量信息，但保持原有时间戳不变
+        logs[targetLogIndex] = {
+          ...logs[targetLogIndex],
+          battery: newLogEntry.battery,
+          is_charging: newLogEntry.is_charging,
+          ip: newLogEntry.ip || req.ip,
+          ...(newLogEntry.app_name && { app_name: newLogEntry.app_name }),
+          ...(newLogEntry.app_package && {
+            app_package: newLogEntry.app_package,
+          }),
+        };
+        responseEntry = logs[targetLogIndex];
+        console.log(
+          `【电量更新】设备: ${newLogEntry.device}，电量: ${newLogEntry.battery}%`
+        );
+      } else {
+        // 如果没有找到现有记录，则创建新记录
+        const newEntry = {
+          device: newLogEntry.device,
+          status: true,
+          battery: newLogEntry.battery,
+          is_charging: newLogEntry.is_charging,
+          time: newLogEntry.time || currentTime,
+          ip: newLogEntry.ip || req.ip,
+          app_name: newLogEntry.app_name,
+          app_package: newLogEntry.app_package,
+          firstLockRecord: null,
+        };
+        logs.unshift(newEntry);
+        responseEntry = newEntry;
+      }
     } else {
+      // 其他情况保持原有逻辑
       if (newLogEntry.status === true) {
         const newEntry = {
           device: newLogEntry.device,
@@ -679,7 +1036,60 @@ async function writeCloudmusicData(data) {
   return writeQueue;
 }
 
-// 9.3 爬取函数
+// 9.3 新增专注任务工具函数
+async function ensureFocusTasksFile() {
+  try {
+    await fsPromises.access(FOCUS_TASKS_FILE);
+  } catch (err) {
+    const initialFocusTasks = {
+      inProgress: [],
+      pending: [],
+    };
+    await fsPromises.writeFile(
+      FOCUS_TASKS_FILE,
+      JSON.stringify(initialFocusTasks, null, 2),
+      "utf8"
+    );
+    console.log(`【数据文件】初始化新的专注任务文件：${FOCUS_TASKS_FILE}`);
+  }
+}
+
+async function readFocusTasks() {
+  await ensureFocusTasksFile();
+  try {
+    const data = await fsPromises.readFile(FOCUS_TASKS_FILE, "utf8");
+    return JSON.parse(data);
+  } catch (e) {
+    console.error(`【数据文件】专注任务读取失败，重置为空数组：${e.message}`);
+    const initialFocusTasks = {
+      inProgress: [],
+      pending: [],
+    };
+    await fsPromises.writeFile(
+      FOCUS_TASKS_FILE,
+      JSON.stringify(initialFocusTasks, null, 2)
+    );
+    return initialFocusTasks;
+  }
+}
+
+async function writeFocusTasks(data) {
+  writeQueue = writeQueue
+    .then(async () => {
+      await fsPromises.writeFile(
+        FOCUS_TASKS_FILE,
+        JSON.stringify(data, null, 2),
+        "utf8"
+      );
+    })
+    .catch((err) => {
+      console.error(`【数据文件】专注任务写入失败：${err.message}`);
+      throw err;
+    });
+  return writeQueue;
+}
+
+// 9.4 爬取函数
 async function scrapeLifeData() {
   const results = [];
   try {

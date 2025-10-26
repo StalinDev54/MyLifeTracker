@@ -130,7 +130,7 @@ onMounted(() => {
 }
 
 .ios-hitokoto-card {
-  width: 100%;
+  width: fit-content;
   max-width: 400px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
@@ -140,6 +140,8 @@ onMounted(() => {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: inline-block;
+  min-width: 200px;
 }
 
 .ios-hitokoto-card:hover {

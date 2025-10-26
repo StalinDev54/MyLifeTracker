@@ -7,6 +7,7 @@ import WorksView from "../components/features/Works.vue";
 import RegionStatisticsView from "../components/features/Statstic.vue";
 import SociaMediaView from "../components/features/SociaMedia.vue";
 import RealtimeVisitors from "../components/features/RealtimeVisitors.vue";
+import TodoView from "../views/TodoView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: "/social-media",
       name: "social-media",
       component: SociaMediaView,
+    },
+    {
+      path: "/todo",
+      name: "todo",
+      component: TodoView,
     },
   ],
   // 确保每次路由跳转后滚动到页面顶部
