@@ -72,10 +72,10 @@
                     <span class="dropdown-text">投喂</span>
                   </div>
 
-                  <!-- <div class="dropdown-item" @click="handleDropdownOption('发消息')">
+                  <div class="dropdown-item" @click="handleDropdownOption('发消息')">
                     <mdui-icon name="chat" size="14" class="dropdown-icon"></mdui-icon>
                     <span class="dropdown-text">发消息</span>
-                  </div> -->
+                  </div>
                   <div class="dropdown-item" @click="handleDropdownOption('媒体')">
                     <mdui-icon name="image" size="14" class="dropdown-icon"></mdui-icon>
                     <span class="dropdown-text">媒体</span>
