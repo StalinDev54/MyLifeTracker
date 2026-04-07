@@ -1,0 +1,13 @@
+.env
+build
+node_modules
+.DS_Store
+.vscode
+.VSCodeCounter
+dist
+dist-ssr
+*.local
+
+tmp
+**/.tmp
+release

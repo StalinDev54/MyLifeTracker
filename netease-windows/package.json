@@ -1,0 +1,33 @@
+{
+  "name": "danmachat-service-server",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node --env-file=.env ./build/index.js",
+    "start-bun": "bun src/index.ts",
+    "dev": "tsx --env-file=.env --watch src/index.ts",
+    "dev-bun": "bun --watch src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bun": "^1.1.9",
+    "@types/node": "^22.5.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "axios": "^1.12.2",
+    "better-sqlite3": "^11.8.1",
+    "nanobus": "^4.5.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.17.0"
+  },
+  "engines": {
+    "node": ">=20.6.0"
+  }
+}
