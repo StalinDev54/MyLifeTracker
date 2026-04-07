@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://xodn.com/icon.png" alt="MyLifeTracker Logo" width="200"/>
+  <img src="https://wework.qpic.cn/wwpic3az/483653_krPcob71RDC3TAk_1775563448/0" alt="MyLifeTracker Logo" width="200"/>
 </p>
 
 <h1 align="center">🤖 MyLifeTracker -心元—— 24小时数字赛博生命</h1>
