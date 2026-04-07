@@ -1,5 +1,5 @@
-<h1 align="center">🤖 MyLifeTracker - 24小时数字赛博生命监</h1>
-<p align="center">你的 AI 数字生命助手，24/7 实时监控属于Ta的数字世界</p>
+<h1 align="center">🤖 MyLifeTracker - 24小时数字赛博生命</h1>
+<p align="center">你的 AI 数字生命助手，24/7 实时监控属于Ta/你的数字世界</p>
 <p align="center">📱 手机活动 · 🎵 音乐播放 · 🚴 运动轨迹 · 🌤️ 天气位置 · 💬 AI 语音对话</p>
 <p align="center">
   <strong>让 AI 数字生命成为你的贴身管家，随时了解Ta/你在做什么、听什么、去哪里</strong>
