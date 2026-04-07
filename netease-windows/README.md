@@ -20,6 +20,8 @@
 
 ## 快速开始
 
+> 💡 **提示：** 本服务需要配合后端服务器使用。详细配置步骤见 [server-up/README.md](../server-up/README.md)
+
 ### 1. 安装依赖
 
 ```bash
@@ -43,6 +45,8 @@ API_URL=http://localhost:3000/api/cloudmusic
 # 鉴权密钥（与 server-up 的 SECRET_KEY 保持一致）
 AUTH_KEY=your_secret_key_here
 ```
+
+> 📝 **注意：** `AUTH_KEY` 必须与后端服务器 [server-up/.env](../server-up/.env.example) 中的 `SECRET_KEY` 保持一致
 
 ### 3. 启动服务
 
@@ -142,7 +146,7 @@ npm start
 
 1. 检查后端服务器是否运行（`http://localhost:3000`）
 2. 确认 `.env` 中的 `API_URL` 配置正确
-3. 确认 `AUTH_KEY` 与后端的 `SECRET_KEY` 一致
+3. 确认 `AUTH_KEY` 与后端的 `SECRET_KEY` 一致（参考 [server-up 配置](../server-up/README.md#环境配置)）
 4. 查看控制台错误信息
 
 ### 频繁上传导致性能问题
@@ -223,4 +227,14 @@ ISC License
 
 - [MyLifeTracker 主项目](../)
 - [后端服务器文档](../server-up/README.md)
+- [Android 客户端文档](../android-up/README.md)
 - [网易云音乐官网](https://music.163.com/)
+
+## 完整系统架构
+
+本服务是 MyLifeTracker 系统的一部分：
+
+- **netease-windows**（本服务）- Windows 网易云音乐播放状态监听
+- **[server-up](../server-up/README.md)** - 后端服务器，接收和存储数据
+- **[android-up](../android-up/README.md)** - Android 设备日志上传客户端
+- **前端展示** - 数据可视化和统计展示
