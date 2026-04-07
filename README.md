@@ -14,20 +14,61 @@
 
 ---
 
+<p align="center">
+  <strong>🚀 一键部署方案正在开发中！</strong>
+</p>
+<p align="center">
+  访问 <a href="https://xodn.com">xodn.com</a> 注册内测账号 | 
+  查看 <a href="https://github.com/StalinDev54/xodn">心元 (XODN) 项目</a>
+</p>
+<p align="center">
+  <strong>心元 (X Origin Digital Nexus AI)</strong> - 数字生命记忆库，让人人都能轻松部署自己的数字生命
+</p>
+
+---
+
 ## 📑 目录
 
+- [🚀 快速体验](#-快速体验)
 - [🔍 项目概述](#-项目概述)
 - [✨ 核心功能](#-核心功能)
 - [🛠️ 技术栈](#-技术栈)
 - [📁 项目结构](#-项目结构)
-- [🚀 快速开始](#-快速开始)
-- [� 使用指南](#-使用指南)
+- [🔧 本地部署](#-本地部署)
+- [💡 使用指南](#-使用指南)
 - [✅ 已完成功能](#-已完成功能)
-- [�️ 开发路线](#-开发路线)
-- [� 开发招募](#-开发招募)
+- [🗓️ 开发路线](#-开发路线)
+- [👥 开发招募](#-开发招募)
 - [🤝 贡献指南](#-贡献指南)
 - [🙏 致谢](#-致谢)
 - [📝 许可证](#-许可证)
+
+---
+
+## 🚀 快速体验
+
+### 🎯 推荐方式：一键部署（开发中）
+
+> 💡 **心元 (XODN) - 数字生命记忆库项目**  
+> 作者正在开发人人可用的一键部署方案，无需手动配置服务器和客户端！
+
+**立即体验：**
+
+1. 🌐 **访问主网站：** [me.jiclub.site](https://me.jiclub.site) - 查看实时数据仪表板
+2. 🚀 **注册内测账号：** [xodn.com](https://xodn.com) - 获取一键部署方案和完整功能体验
+3. 📦 **查看 XODN 项目：** [github.com/StalinDev54/xodn](https://github.com/StalinDev54/xodn) - 心元数字生命记忆库
+4. 💬 **AI 对话体验：** [chat.jiclub.site](https://chat.jiclub.site) - 与数字生命对话（开发优化中）
+
+**心元 (XODN) 项目特点：**
+- ✅ 一键部署，无需复杂配置
+- ✅ 自动配置 Android 监控客户端
+- ✅ 云端数据同步和备份
+- ✅ 多设备数据聚合
+- ✅ 更强大的 AI 分析能力
+
+### 🛠️ 开发者本地部署
+
+如果你是开发者，想要自己部署和定制 MyLifeTracker，请参考 [本地部署指南](#-本地部署)。
 
 ---
 
@@ -65,7 +106,7 @@
 - **开发阶段：** 核心功能已完成，24 小时实时监控系统稳定运行
 - **主网站入口：** [me.jiclub.site](https://me.jiclub.site) - 项目主页和数据仪表板
 - **AI 对话入口：** [chat.jiclub.site](https://chat.jiclub.site) - 与你的数字生命对话（开发优化中，暂未开源）
-- **一键部署方案：** 正在开发中，访问 [xodn.com](https://xodn.com) 了解最新进度并注册内测账号
+- **一键部署方案：** [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) - 数字生命记忆库，访问 [xodn.com](https://xodn.com) 注册内测
 - **支持平台：** 
   - ✅ Windows（电脑监控 + 网易云音乐监听）
   - ✅ Android（手机活动监控，推荐使用 AutoTask）
@@ -101,9 +142,9 @@
 | 电池状态 | 实时电量、充电状态 | "电量 20% - 未充电" | "电量不足，记得充电" |
 | 应用切换 | 记录应用切换频率和使用时长 | "微信 30分钟 → B站 45分钟 → 抖音 1小时" | "你今天切换了 50 次应用" |
 
-> 💡 **一键部署方案开发中：** 作者正在开发人人可用的一键部署方案，无需手动配置 AutoTask。访问 [xodn.com](https://xodn.com) 注册账号即可参与内测，了解最新开发进度！
+> 🚀 **一键部署方案（推荐）：** 访问 [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) 或 [xodn.com](https://xodn.com) 注册内测账号，无需手动配置 AutoTask，系统自动完成所有配置！
 
-**当前配置方式：** [android-up/README.md](android-up/README.md) | [AutoTask 配置教程](android-up/autotask-guide.md)
+**手动配置方式：** [android-up/README.md](android-up/README.md) | [AutoTask 配置教程](android-up/autotask-guide.md)
 
 ### 🎵 音乐播放实时同步（网易云音乐）
 
@@ -163,7 +204,10 @@
 | 🧠 智能建议 | 基于行为模式提供建议 | "你最近睡眠不足，建议早点休息" |
 | 🎭 情感陪伴 | 有温度的交流互动 | "今天辛苦了，明天会更好" |
 
-> 🚀 **快速体验：** 访问 [me.jiclub.site](https://me.jiclub.site) 查看实时数据仪表板，或访问 [xodn.com](https://xodn.com) 注册内测账号体验完整功能！
+> 🚀 **快速体验：**
+> - 访问 [me.jiclub.site](https://me.jiclub.site) 查看实时数据仪表板
+> - 访问 [xodn.com](https://xodn.com) 注册内测账号体验完整功能
+> - 查看 [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) 了解一键部署方案
 
 ---
 
@@ -298,9 +342,10 @@ MyLifeTracker/
 
 1. **访问主网站：** [me.jiclub.site](https://me.jiclub.site) - 查看实时数据仪表板
 2. **注册内测账号：** [xodn.com](https://xodn.com) - 获取一键部署方案和完整功能体验
-3. **AI 对话体验：** [chat.jiclub.site](https://chat.jiclub.site) - 与数字生命对话（开发优化中）
+3. **查看 XODN 项目：** [github.com/StalinDev54/xodn](https://github.com/StalinDev54/xodn) - 心元数字生命记忆库
+4. **AI 对话体验：** [chat.jiclub.site](https://chat.jiclub.site) - 与数字生命对话（开发优化中）
 
-> 💡 **一键部署方案：** 作者正在开发人人可用的一键部署方案，注册 [xodn.com](https://xodn.com) 即可参与内测，无需手动配置服务器和客户端！
+> 💡 **心元 (XODN) 一键部署方案：** 作者正在开发人人可用的一键部署方案，注册 [xodn.com](https://xodn.com) 即可参与内测，无需手动配置服务器和客户端！
 
 ### 🛠️ 本地部署（开发者）
 
@@ -480,7 +525,7 @@ npm run preview
 
 ---
 
-## 🔧 使用指南
+## 💡 使用指南
 
 ### 典型使用场景
 
@@ -511,7 +556,9 @@ npm run preview
 3. 你锁屏睡觉（Android 自动上传锁屏事件和时长）
 4. 数字生命："晚安，明天会更好"
 
-> 🎯 **实时监控亮点：** 系统能精确统计你的手机使用时长、锁屏时长、每个应用的使用时长、电池状态等，所有数据都是实时的！访问 [xodn.com](https://xodn.com) 注册内测账号即可体验完整功能。
+> 🎯 **实时监控亮点：** 系统能精确统计你的手机使用时长、锁屏时长、每个应用的使用时长、电池状态等，所有数据都是实时的！
+> 
+> 🚀 **快速体验：** 访问 [xodn.com](https://xodn.com) 注册内测账号，或查看 [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) 了解一键部署方案。
 
 ### 后端架构说明
 
@@ -912,9 +959,15 @@ headers: {
    A：完全不会。所有数据都存储在你的本地服务器（JSON 文件），不会上传到任何云端。你可以完全控制自己的数据，甚至可以断网使用。
 
 2. **Q：如何快速体验完整功能？**  
-   A：访问 [xodn.com](https://xodn.com) 注册内测账号，即可体验一键部署方案和完整功能，无需手动配置服务器和客户端。
+   A：
+   - 访问 [xodn.com](https://xodn.com) 注册内测账号，体验一键部署方案
+   - 查看 [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) 了解数字生命记忆库
+   - 访问 [me.jiclub.site](https://me.jiclub.site) 查看实时数据仪表板
 
-3. **Q：数字生命能做什么？**  
+3. **Q：什么是心元 (XODN) 项目？**  
+   A：心元 (X Origin Digital Nexus AI) 是数字生命记忆库项目，提供一键部署方案，让人人都能轻松部署自己的数字生命监控系统。无需手动配置服务器、客户端，系统自动完成所有配置。项目地址：[github.com/StalinDev54/xodn](https://github.com/StalinDev54/xodn)
+
+4. **Q：数字生命能做什么？**  
    A：数字生命是一个 AI 助手，可以：
    - 24 小时语音通话（通过小智 AI）
    - 文本聊天（通过 chat.jiclub.site）
@@ -924,13 +977,13 @@ headers: {
    - 生成每日/每周生活报告
    - 提供个性化的健康和效率建议
 
-4. **Q：如何与数字生命对话？**  
-   A：有两种方式：
+5. **Q：如何与数字生命对话？**  
+   A：有三种方式：
    - 语音通话：通过小智 AI 拨打电话（需配置小智 AI 设备）
    - 文本聊天：访问 [chat.jiclub.site](https://chat.jiclub.site) 发送消息（开发优化中）
    - 数据仪表板：访问 [me.jiclub.site](https://me.jiclub.site) 查看实时数据
 
-5. **Q：手机监控能统计哪些数据？**  
+6. **Q：手机监控能统计哪些数据？**  
    A：可以实时统计：
    - 手机使用总时长
    - 锁屏总时长（精确到分钟）
@@ -939,49 +992,49 @@ headers: {
    - 电池电量和充电状态
    - 所有数据都是实时的，可以随时查询
 
-6. **Q：Android 手机监控会耗电吗？**  
+7. **Q：Android 手机监控会耗电吗？**  
    A：不会。使用 AutoTask 等自动化应用只在特定事件（锁屏、解锁、应用切换）时触发，不会常驻后台，耗电量极低。
 
-7. **Q：网易云音乐监听服务会影响客户端性能吗？**  
+8. **Q：网易云音乐监听服务会影响客户端性能吗？**  
    A：不会。监听服务仅读取数据库文件，不会修改任何数据，也不会干扰客户端的正常运行。采用了防抖机制，避免频繁读取造成性能影响。详见 [netease-windows/README.md](netease-windows/README.md#注意事项)。
 
-8. **Q：我没有小智 AI 设备，还能用吗？**  
+9. **Q：我没有小智 AI 设备，还能用吗？**  
    A：可以。小智 AI 只是语音通话功能的一部分，你仍然可以：
    - 使用 [chat.jiclub.site](https://chat.jiclub.site) 进行文本对话
    - 访问 [me.jiclub.site](https://me.jiclub.site) 查看实时数据仪表板
    - 使用所有监控和统计功能
    - 后续我们会支持更多 AI 平台（如 ChatGPT、Claude）
 
-9. **Q：数据存储在哪里？是否安全？**  
-   A：当前使用本地 JSON 文件存储（路径：`server-up/lifelogs.json`、`server-up/cloudmusic_logs.json`、`server-up/focus_tasks.json`），所有数据仅保存在本地服务器，无云端上传，安全性可控。
+10. **Q：数据存储在哪里？是否安全？**  
+    A：当前使用本地 JSON 文件存储（路径：`server-up/lifelogs.json`、`server-up/cloudmusic_logs.json`、`server-up/focus_tasks.json`），所有数据仅保存在本地服务器，无云端上传，安全性可控。
 
-10. **Q：一键部署方案什么时候上线？**  
-    A：正在开发中，访问 [xodn.com](https://xodn.com) 注册账号即可参与内测，了解最新开发进度。一键部署方案将大大简化配置流程，让人人都能轻松使用。
+11. **Q：一键部署方案什么时候上线？**  
+    A：正在开发中，访问 [xodn.com](https://xodn.com) 注册账号即可参与内测，了解最新开发进度。查看 [心元 (XODN) 项目](https://github.com/StalinDev54/xodn) 获取更多信息。
 
-11. **Q：如何获取第三方 API 的 Token？**  
+12. **Q：如何获取第三方 API 的 Token？**  
     A：
     - **行者运动 Token：** 访问 [行者开放平台](https://open.imxingzhe.com/) 注册并创建应用
     - **百度统计 Token：** 登录 [百度统计](https://tongji.baidu.com/) 后台，在 API 管理中获取
     - **网易云音乐：** 使用 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 项目提供的接口
 
-12. **Q：如何在 Android 手机上上传设备使用日志？**  
+13. **Q：如何在 Android 手机上上传设备使用日志？**  
     A：
-    - **推荐方式：** 访问 [xodn.com](https://xodn.com) 注册内测账号，使用一键部署方案（开发中）
+    - **推荐方式：** 访问 [xodn.com](https://xodn.com) 注册内测账号，使用心元 (XODN) 一键部署方案
     - **手动配置：** 使用 **AutoTask** 自动化应用（免费开源）配置自动上传任务。详细配置步骤请参考 [android-up/README.md](android-up/README.md) 和 [android-up/autotask-guide.md](android-up/autotask-guide.md) 文档。
 
-13. **Q：设备日志会记录哪些信息？**  
+14. **Q：设备日志会记录哪些信息？**  
     A：仅记录设备名称、锁屏状态、锁屏时长、电池电量、充电状态、当前应用包名、应用使用时长。不会记录应用内容、聊天记录、密码等敏感信息。所有数据仅用于个人使用统计。详见 [android-up/README.md](android-up/README.md#数据说明)。
 
-14. **Q：我可以自定义数字生命的形象吗？**  
+15. **Q：我可以自定义数字生命的形象吗？**  
     A：当前提供默认形象，「自定义形象」功能正在开发中（预计 2026年5月完成），届时你可以上传自己的形象、调整动作和表情。
 
-15. **Q：项目开源后会商业化吗？**  
+16. **Q：项目开源后会商业化吗？**  
     A：项目采用 ISC 许可证，开源后允许非商业/商业使用（需保留版权声明），核心功能永久免费，未来可能推出付费增值服务（如高级形象、云端备份），但不影响基础功能使用。
 
-16. **Q：我是新手，可以参与开发吗？**  
+17. **Q：我是新手，可以参与开发吗？**  
     A：完全可以！项目新手友好，提供入门任务和技术指导，文档优化、测试等角色无需深厚开发经验，欢迎学生/入门开发者加入。
 
-17. **Q：数字生命会主动提醒我吗？**  
+18. **Q：数字生命会主动提醒我吗？**  
     A：会的！数字生命会基于你的实时数据主动提醒你：
     - 工作太久了，该休息了
     - 刷手机太久了，该做正事了
@@ -990,7 +1043,7 @@ headers: {
     - 电量不足，记得充电
     - 等等...
 
-18. **Q：chat.jiclub.site 什么时候开源？**  
+19. **Q：chat.jiclub.site 什么时候开源？**  
     A：chat.jiclub.site 目前正在开发优化中，暂未开源。访问 [xodn.com](https://xodn.com) 注册内测账号可以提前体验。
 
 ---
@@ -1010,6 +1063,8 @@ headers: {
 💬 **AI 对话入口：** [chat.jiclub.site](https://chat.jiclub.site) - 与你的数字生命对话（开发优化中）
 
 🚀 **一键部署方案：** [xodn.com](https://xodn.com) - 注册内测账号，了解最新开发进度
+
+📦 **心元 (XODN) 项目：** [github.com/StalinDev54/xodn](https://github.com/StalinDev54/xodn) - 数字生命记忆库
 
 📝 **关注更新：** [作者博客](https://blog.jiclub.site) - 获取最新开发日志
 
