@@ -19,6 +19,11 @@ dist-ssr
 .env.test.local
 .env.production.local
 
+# Backend data files (JSON storage)
+server-up/lifelogs.json
+server-up/cloudmusic_logs.json
+server-up/focus_tasks.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
