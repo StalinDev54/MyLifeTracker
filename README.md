@@ -890,6 +890,16 @@ headers: {
 
 **或者直接在 GitHub 提交 Issue/PR，我们会及时回复！**
 
+### 💬 加入交流群
+
+<p align="center">
+  <img src="https://wework.qpic.cn/wwpic3az/642348_pwHOJ4CtRmaNz_t_1775564094/0" alt="交流群二维码" width="300"/>
+</p>
+<p align="center">
+  <strong>扫码加入 MyLifeTracker 交流群</strong><br>
+  与开发者和用户一起交流讨论，获取最新动态和技术支持
+</p>
+
 ---
 
 ## 🤝 贡献指南
