@@ -94,7 +94,6 @@
 **立即体验：**
 
 1. 🌐 **访问主网站：** [me.jiclub.site](https://me.jiclub.site) - 查看实时数据仪表板
-2. 🚀 **注册内测账号：** [xodn.com](https://xodn.com) - 获取一键部署方案和完整功能体验
 3. 📦 **查看 XODN 项目：** [github.com/StalinDev54/xodn](https://github.com/StalinDev54/xodn) - 心元数字生命记忆库
 4. 💬 **AI 对话体验：** [chat.jiclub.site](https://chat.jiclub.site) - 与数字生命对话（开发优化中）
 
